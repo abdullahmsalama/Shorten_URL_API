@@ -65,7 +65,10 @@ async def shorten_url(request_payload: ShortenRequest):
     if check_uniqueness(url = request_payload.long_url, url_type = 'long_url'):
         # if not shortened before, shorten it
         while True:
-            # keep producing shortened URLs until a unique shortened URL is produced
+            """ keep producing shortened URLs until a unique shortened URL is produced
+            I am, of course, aware of other methods that try to achieve uniqueness (like Hashids and short_url packages)
+            But I am doing this for simplicity, and because I am hesitant on how these packages will function
+            If the api is run over multiple machines/multiple clusters """
             generated_url = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
             shortened_url = base_url + generated_url
             # stop if the produced shortened URL is unique
